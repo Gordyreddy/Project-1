@@ -3,7 +3,7 @@ name=input("What is your name?\n")
 print("")# prints a blank space 
 
 print(f"Hello, {name} let`s play rock paper scissor\n")
-for 
+
 u=input("Choose one ( Rock, Paper or scissor) \n")
 
 print("")# prints a blank space 
