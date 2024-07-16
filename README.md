@@ -1,2 +1,4 @@
 # Project-1
-first project
+first project ( rock, paper, scissor )
+<br>
+Author - ArvineGotike
