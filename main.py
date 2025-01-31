@@ -1,125 +1,97 @@
+# Rock, Paper,Scissors with python
+
+
+user_name = input("What is your name?\n").lower()  # takes username
+
+file_name = (
+    f"user_data/{user_name}_score.txt"  # converts the name to use as score file name
+)
 import os
+
+
 def file_exists(file):
     return os.path.isfile(file)
-un=input("What is your name?\n")
-name=un.lower()
-
-print("")# prints a blank space 
-
-file = (f"user_data/{name}_score.txt")
-exists = file_exists(file)
 
 
-if(exists == True ):
-    def d():
-        with open (f"user_data/{name}_score.txt") as f:
-            highscorei=f.read()
-            if(highscorei!=""):
-                highscore=int(highscorei)
+if file_exists(file_name):
+
+    def score_data():
+        with open(f"user_data/{user_name}_score.txt") as user_file:
+            file_data = user_file.read()
+            if file_data != "":
+                new_score = int(file_data)
             else:
-                highscore = 0
-        return highscore
-    highscore=d()
-    print(f"Hello {name} \nWelcome back :)\n")
+                new_score = 0
+        return new_score
+    highscore = score_data()
+    print(f"Hello {user_name}, \nWelcome back :)\n")
     print(f"Your previous high score is: {highscore}")
-    
-    print("")# prints a blank space 
-
 else:
-    def d():
-        highscore = 0
-        return highscore
-    print(f"Hey {name}\n")
-    print("welcome to rock paper scissor a fun and exciting game.\n")
-    print("Author: Arvind Gotike\n")
-highscore=d()
+    print(f"Hey {user_name},")
+    print("welcome to 'rock, paper, scissor' a fun and exciting game.")
+    
 score = 0
-starting = "y"
-while( starting=="y" or c.lower()=="y"):
-    u=input("Choose one \n( Rock, Paper or scissor) \n")
 
-    print("")# prints a blank space 
+while True:
+    user_input = input("\nChoose one \n( Rock, Paper or scissor) \n").lower()
 
-    import random
-    computer=random.choice([1,2,3])
-    user_input=u.lower()
+    if user_input == "rock" or user_input == "paper" or user_input == "scissor":
 
-    if( user_input == "rock" or user_input == "paper" or user_input == "scissor" ):
-        cdict={"rock":1, "paper":2, "scissor":3}
-        rdict={1:"rock",2:"paper",3:"scissor"}
-        user=cdict[user_input]
+        import random
 
-        print("")# prints a blank space 
+        computer_choice = random.choice([1, 2, 3])
+        choice = {"rock": 1, "paper": 2, "scissor": 3}
+        reverse_choice = {1: "rock", 2: "paper", 3: "scissor"}
+        user_choice = choice[user_input]
+        print("")  # prints a blank space
 
-        print(f"You choose {u.lower()} and the computer choose {rdict[computer]}\n")
-        a=computer
-        b=user
-        def output(a , b):
-            if(a==b):
-                print("Its a draw!")
-            else:
-                if(a==1 and b==3):
-                    return "You lost!"
-                elif(a==1 and b==2):
-                    return "You won!"
-                elif(a==2 and b==1):
-                    return "You lost!"
-                elif(a==2 and b== 3):
-                    return "You won!"
-                elif(a==3 and b==2):
-                    return "You lost!"
-                elif(a==3 and b==1):
-                    return "You lost!"
-        o=output(a, b)
-        print(o)
+        print(
+            f"Your choose: {user_input}\nComputer choose: {reverse_choice[computer_choice]}"
+        )
 
-        print("")# prints a blank space 
+        print("")  # prints a blank space
 
-        if (o == "You won!" ):
-            score+=1
+        if user_choice == computer_choice:
+            print("Its a draw!")
+        elif (
+            (user_choice == 1 and computer_choice == 3)
+            or (user_choice == 2 and computer_choice == 1)
+            or (user_choice == 3 and computer_choice == 2)
+        ):
+            score += 1
+            print("You won!")
             print(f"Your score is: {score}\n")
             print(f"Your previous high score is: {highscore}")
-        elif(o == "You lost!"):
-            score=0
-            print(f"Your Score is: {score}\n")
-            print(f"Your previous high score is: {highscore}")
         else:
-            print(f"Your Score is: {score}\n")
+            score = 0
+            print("You lost!")
+            print(f"Your Score is: {score}")
             print(f"Your previous high score is: {highscore}")
-        if(score>=highscore):
-            with open(f"user_data/{name}_score.txt", "w") as wr:
-                wr.write(str(score))
+        if score >= highscore:
+            with open(f"user_data/{user_name}_score.txt", "w") as file_write:
+                file_write.write(str(score))
 
-        print("")# prints a blank space 
-            
-        c=input("Do you want to play again?( y/n )\n")
+        print("")  # prints a blank space
 
-        print("")# prints a blank space 
-            
-        if(c=="y"):
+        replay = input("Do you want to play again?( y/n )\n")
+
+        if replay == "y":
             continue
-            
-        elif(c=="n"):
-            print(f"Thankyou for playing {name}")
+        elif replay == "n":
+            print(f"Thankyou for playing {user_name}")
             break
+        elif replay not in ("y", "n"):
 
-        elif( c != "y" or c != "n" ):
-            print("Something went wrong")
+            print("\nSomething went wrong")
             print("choose ( y ) for ( yes ) and choose ( n ) for ( no )")
+            replay = input("Do you want to play again?( y/n )\n")
 
-            print("")# prints a blank space 
-                
-            c=input("Do you want to play again?( y/n )\n")
-            
-        if(c=="y"):
-            continue
-            
-        else:
-            print(f"Thankyou for playing {name}")
-    elif( user_input != "rock" or user_input != "paper" or user_input != "scissor" ):
-        print("Something went wrong")
-        print(f"Thankyou for playing {name}")
+            if replay == "y":
+                continue
+            else:
+                print("Something went wrong try please again.")
+                break
+
+    else:
+        print("Something went wrong please try again...")
         break
-else:
-    print("Something went wrong")
-    print(f"Thankyou for playing {name}")
