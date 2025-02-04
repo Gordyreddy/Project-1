@@ -1,7 +1,14 @@
+import random
+import os
 
 
-def welcome(user_name, os):
-    file_path = f"user_data/{user_name.lower()}_score.txt"
+USER_NAME = input("Enter your name.\n")
+SCORE = 0  # initial score for a new game
+CHOICES = {1: "rock", 2: "paper", 3: "scissor"}
+
+
+def welcome():
+    file_path = f"user_data/{USER_NAME.lower()}_score.txt"
     if os.path.isfile(file_path):
         with open(file_path, "r") as user_file:
             file_data = user_file.read()
@@ -9,13 +16,13 @@ def welcome(user_name, os):
                 old_score = int(file_data)
             else:
                 old_score = 0
-        print(f"\nHey {user_name}, \nWelcome back :)")
+        print(f"\nHey {USER_NAME}, \nWelcome back :)")
         print(f"Your previous high score is: {old_score}")
 
         return old_score
     else:
         new_score = 0
-        print(f"\nHello {user_name},")
+        print(f"\nHello {USER_NAME},")
         print("Welcome to ROCK PAPER SCISSORS a fun and exciting game.")
 
         return new_score
@@ -43,13 +50,13 @@ def user_input():
     return user_choice
 
 
-def game_logic(user_choice, score, high_score, choices, user_name, random):
+def game_logic(user_choice, high_score):
     computer_choice = random.choice([1, 2, 3])
 
-    print(f"Your choise is: {choices[user_choice]}\n")
+    print(f"Your choise is: {CHOICES[user_choice]}\n")
     print("Now it's Computer's Turn...")
-    print(f"\nComputer choise is: {choices[computer_choice]}")
-    print(f"\n{choices[user_choice]} VS {choices[computer_choice]}\n")
+    print(f"\nComputer choise is: {CHOICES[computer_choice]}")
+    print(f"\n{CHOICES[user_choice]} VS {CHOICES[computer_choice]}\n")
 
     if user_choice == computer_choice:
         print("<== Its a draw! ==>")
@@ -58,27 +65,27 @@ def game_logic(user_choice, score, high_score, choices, user_name, random):
         or (user_choice == 2 and computer_choice == 1)
         or (user_choice == 3 and computer_choice == 2)
     ):
-        score += 1
+        SCORE += 1
         print("<== You won! ==>")
-        print(f"Your score is: {score}\n")
+        print(f"Your score is: {SCORE}\n")
         print(f"Your previous high score is: {high_score}")
     else:
-        score = 0
+        SCORE = 0
         print("<== Computer won! ==>")
-        print(f"Your Score is: {score}")
+        print(f"Your Score is: {SCORE}")
         print(f"Your previous high score is: {high_score}")
-    if score >= high_score:
-        with open(f"user_data/{user_name}_score.txt", "w") as file_data:
-            file_data.write(str(score))
+    if SCORE >= high_score:
+        with open(f"user_data/{USER_NAME}_score.txt", "w") as file_data:
+            file_data.write(str(SCORE))
 
-def play_again(user_name):
+def play_again():
     while True:
         play_again = input("Do you want to play again?( y/n )\n")
         if play_again in("y",'n'):
             if play_again == "y":
                 value = True
             elif play_again == "n":
-                print(f"Thankyou for playing {user_name}")
+                print(f"Thankyou for playing {USER_NAME}")
                 break
             return value
         else:
